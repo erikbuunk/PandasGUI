@@ -2,8 +2,8 @@
 
 # https://stackoverflow.com/a/7693234/3620725
 
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import Qt
+from PySide6 import QtCore, QtWidgets
+from PySide6.QtCore import Qt
 
 
 class SearchableComboBox(QtWidgets.QComboBox):
@@ -53,7 +53,7 @@ class SearchableComboBox(QtWidgets.QComboBox):
 
 if __name__ == "__main__":
     import sys
-    from PyQt5.QtWidgets import QApplication
+    from PySide6.QtWidgets import QApplication
 
     app = QApplication(sys.argv)
     string_list = ["hola muchachos", "adios amigos", "hello world", "good bye"]

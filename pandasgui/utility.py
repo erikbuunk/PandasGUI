@@ -1,6 +1,7 @@
 import logging
 import pandas as pd
-from PyQt5 import QtWidgets
+from PySide6 import QtWidgets
+from PySide6 import QtGui
 from typing import List, Union
 import sys
 import inspect
@@ -101,7 +102,7 @@ def fix_pyqt():
     sys.excepthook = my_exception_hook
 
 
-# This makes it so PyQt5 windows don't become unresponsive in IPython outside app._exec() loops
+# This makes it so PySide6 windows don't become unresponsive in IPython outside app._exec() loops
 def fix_ipython():
     from IPython import get_ipython
     ipython = get_ipython()
@@ -319,9 +320,9 @@ def test_logging():
 
 # Resize a widget to a percentage of the screen size
 def resize_widget(widget, x, y):
-    from PyQt5 import QtCore, QtWidgets
-    widget.resize(QtCore.QSize(int(x * QtWidgets.QDesktopWidget().screenGeometry().width()),
-                               int(y * QtWidgets.QDesktopWidget().screenGeometry().height())))
+    from PySide6 import QtCore, QtWidgets
+    widget.resize(QtCore.QSize(int(x * QtGui.QScreen().geometry().width()),
+                               int(y *QtGui.QScreen().geometry().height())))
 
 
 def get_kwargs():

@@ -2,10 +2,10 @@ import os
 import re
 import sys
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtCore import QUrl
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QDesktopServices
+from PySide6.QtCore import QUrl
 from pandasgui.utility import nunique, unique
 
 from pandasgui.store import PandasGuiDataFrameStore

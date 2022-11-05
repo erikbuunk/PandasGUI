@@ -20,9 +20,9 @@ setup(
     install_requires=[
         "pandas",
         "numpy",
-        "PyQt5",
-        "PyQt5-sip",
-        "PyQtWebEngine",
+        "PySide6",
+        # "PySide6-sip",
+        # "PyQtWebEngine",
         "plotly",
         "wordcloud",
         "setuptools",
@@ -32,8 +32,8 @@ setup(
         "pyarrow",
         "astor",
         "typing-extensions",
-        "qtstylish>=0.1.2",
-        "pywin32; platform_system=='Windows'"
+        # "qtstylish>=0.1.2",
+        # "pywin32; platform_system=='Windows'"
     ],
     entry_points={
         "gui_scripts": [

@@ -14,7 +14,7 @@ from typing import Iterable, List, Union
 from typing_extensions import Literal
 import pandas as pd
 from pandas import DataFrame
-from PyQt5 import QtCore, QtWidgets
+from PySide6 import QtCore, QtWidgets
 import traceback
 from datetime import datetime
 from pandasgui.utility import unique_name, in_interactive_console, refactor_variable, clean_dataframe, nunique, \
@@ -98,7 +98,8 @@ DEFAULT_SETTINGS = {'editable': True,
 
 @dataclass
 class SettingsStore(DictLike, QtCore.QObject):
-    settingsChanged = QtCore.pyqtSignal()
+    settingsChanged = QtCore.Signal()
+    # Signal()
 
     block: Setting
     editable: Setting
@@ -183,18 +184,18 @@ class SettingsStore(DictLike, QtCore.QObject):
             self[setting_name].value = setting_value
 
     def copy(self):
-            """ 
+            """
             Create a copy of the settings with a new QObject. Intended as a workaround
             to this bug: https://github.com/adamerose/PandasGUI/issues/166
             """
             # Create new settings instance
             new_settings = SettingsStore()
-            
+
             # Copy every attribute that's a Setting
             for attr, value in self.__dict__.items():
                 if isinstance(value, Setting):
                     setattr(new_settings, attr, value)
-                
+
             return new_settings
 
     def __repr__(self):

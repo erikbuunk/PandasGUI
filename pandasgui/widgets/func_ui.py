@@ -1,7 +1,12 @@
 from collections import OrderedDict
 
-from PyQt5 import QtCore, QtGui, QtWidgets, sip
-from PyQt5.QtCore import Qt
+
+
+
+
+from PySide6.QtWidgets import QAbstractItemView
+from PySide6 import QtCore, QtGui, QtWidgets #, sip
+from PySide6.QtCore import Qt
 from typing import List, Callable
 import os
 import inspect
@@ -9,7 +14,7 @@ import pprint
 import pandas as pd
 
 from pandasgui.jotly import ColumnName, ColumnNameList, OtherDataFrame
-from pandasgui.utility import nunique, get_function_body, refactor_variable, kwargs_string, flatten_df
+from pandasgui.utility import get_function_body, refactor_variable, kwargs_string, flatten_df
 from pandasgui.store import SETTINGS_STORE, PandasGuiDataFrameStore
 import pandasgui
 import ast
@@ -149,14 +154,14 @@ def format_kwargs(kwargs):
 class SourceTree(ColumnViewer):
     def __init__(self, pgdf: PandasGuiDataFrameStore):
         super().__init__(pgdf)
-        self.tree.setDragDropMode(self.tree.DragOnly)
+        self.tree.setDragDropMode(QAbstractItemView.DragOnly)
         self.tree.setHeaderLabels(['Name', '#Unique', 'Type'])
 
 class FuncUi(QtWidgets.QWidget):
-    valuesChanged = QtCore.pyqtSignal()
-    itemDropped = QtCore.pyqtSignal()
-    finished = QtCore.pyqtSignal()
-    saving = QtCore.pyqtSignal()
+    valuesChanged = QtCore.Signal()
+    itemDropped = QtCore.Signal()
+    finished = QtCore.Signal()
+    saving = QtCore.Signal()
 
     def __init__(self, pgdf, schema: Schema = None):
         super().__init__()
@@ -244,13 +249,14 @@ class FuncUi(QtWidgets.QWidget):
         self.setLayout(self.main_layout)
 
     def handle_double_click(self, item, column):
-        # Delete chldren if is section
-        if item.parent() is None:
-            for i in reversed(range(item.childCount())):
-                sip.delete(item.child(i))
-        # Delete if not section
-        else:
-            sip.delete(item)
+        print("ERROR sip not available")
+        # # Delete chldren if is section
+        # if item.parent() is None:
+        #     for i in reversed(range(item.childCount())):
+        #         # sip.delete(item.child(i))
+        # # Delete if not section
+        # else:
+        #     sip.delete(item)
 
     def custom_kwargs(self):
         self.kwargs_dialog.setVisible(not self.kwargs_dialog.isVisible())
@@ -363,8 +369,9 @@ class FuncUi(QtWidgets.QWidget):
 
         # Delete all sections
         root = self.dest_tree.invisibleRootItem()
-        for i in reversed(range(root.childCount())):
-            sip.delete(root.child(i))
+        print("Error sip not available")
+        # for i in reversed(range(root.childCount())):
+        #     sip.delete(root.child(i))
 
         for arg in schema.args:
 
@@ -509,7 +516,7 @@ class FuncUi(QtWidgets.QWidget):
 
 
 class ColumnDropZone(QtWidgets.QLineEdit):
-    valueChanged = QtCore.pyqtSignal(str)
+    valueChanged = QtCore.Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -564,7 +571,7 @@ class ColumnDropZone(QtWidgets.QLineEdit):
 
 
 class ColumnListDropZone(QtWidgets.QListWidget):
-    valueChanged = QtCore.pyqtSignal(list)  # List of strings
+    valueChanged = QtCore.Signal(list)  # List of strings
 
     def __init__(self):
         super().__init__()
@@ -669,8 +676,8 @@ class DestinationTree(base_widgets.QTreeWidget):
         root = self.invisibleRootItem()
         root.setFlags(root.flags() & Qt.ItemIsEnabled & ~Qt.ItemIsDropEnabled & ~Qt.ItemIsDragEnabled)
 
-        self.setDragDropMode(self.InternalMove)
-        self.setSelectionMode(self.ExtendedSelection)
+        self.setDragDropMode(QAbstractItemView.InternalMove)
+        self.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.setDefaultDropAction(QtCore.Qt.CopyAction)
 
     # https://stackoverflow.com/a/67213574/3620725
@@ -738,7 +745,7 @@ class CustomKwargsEditor(QtWidgets.QDialog):
 
 if __name__ == "__main__":
     import sys
-    from PyQt5.QtWidgets import QApplication
+    from PySide6.QtWidgets import QApplication
     from pandasgui.datasets import pokemon
 
     app = QApplication(sys.argv)

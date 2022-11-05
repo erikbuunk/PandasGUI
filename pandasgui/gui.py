@@ -1,13 +1,12 @@
 import inspect
 import os
 import sys
-import pprint
 from typing import Callable, Union
 from dataclasses import dataclass
 import pandas as pd
 import pkg_resources
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtCore import Qt
 
 import pandasgui
 from pandasgui.store import PandasGuiStore
@@ -17,8 +16,7 @@ from pandasgui.widgets.json_viewer import JsonViewer
 from pandasgui.widgets.navigator import Navigator
 from pandasgui.widgets.figure_viewer import FigureViewer
 from pandasgui.widgets.settings_editor import SettingsEditor
-import qtstylish
-from pandasgui.widgets.python_highlighter import PythonHighlighter
+# import qtstylish
 from IPython.core.magic import register_line_magic
 
 import logging
@@ -115,7 +113,7 @@ class PandasGui(QtWidgets.QMainWindow):
         self.setStatusBar(QtWidgets.QStatusBar())
 
         # Center window on screen
-        screen = QtWidgets.QDesktopWidget().screenGeometry()
+        screen = QtGui.QScreen().geometry()
         size = self.geometry()
         self.move(int((screen.width() - size.width()) / 2),
                   int((screen.height() - size.height()) / 2), )
@@ -126,7 +124,7 @@ class PandasGui(QtWidgets.QMainWindow):
         self.app.setWindowIcon(QtGui.QIcon(pdgui_icon_path))
 
         # Hide the question mark on dialogs
-        self.app.setAttribute(Qt.AA_DisableWindowContextHelpButton)
+        # self.app.setAttribute(Qt.AA_DisableWindowContextHelpButton)
 
         # Accept drops, for importing files. See methods below: dropEvent, dragEnterEvent, dragMoveEvent
         self.setAcceptDrops(True)
@@ -237,7 +235,7 @@ class PandasGui(QtWidgets.QMainWindow):
                     if type(x) == dict:
                         add_menus(x, menu)
                     else:
-                        action = QtWidgets.QAction(x.name, self)
+                        action = QtGui.QAction(x.name, self)
                         action.setShortcut(x.shortcut)
                         action.triggered.connect(x.func)
                         menu.addAction(action)
@@ -250,10 +248,10 @@ class PandasGui(QtWidgets.QMainWindow):
             self.setStyleSheet("")
             self.store.settings.theme.value = 'classic'
         elif theme == "dark":
-            self.setStyleSheet(qtstylish.dark())
+            # self.setStyleSheet(qtstylish.dark())
             self.store.settings.theme.value = 'dark'
         elif theme == "light":
-            self.setStyleSheet(qtstylish.light())
+            # self.setStyleSheet(qtstylish.light())
             self.store.settings.theme.value = 'light'
 
     def copy(self):

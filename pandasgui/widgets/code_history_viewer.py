@@ -1,10 +1,8 @@
-import os
 import sys
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide6 import QtGui, QtWidgets
 
 from pandasgui.store import PandasGuiDataFrameStore, SETTINGS_STORE
-import pandasgui
 
 import logging
 
@@ -25,7 +23,7 @@ class CodeHistoryViewer(QtWidgets.QFrame):
 
         self.textbox = QtWidgets.QPlainTextEdit()
         self.textbox.setReadOnly(True)
-        self.textbox.setLineWrapMode(self.textbox.NoWrap)
+        self.textbox.setLineWrapMode(QtWidgets.QPlainTextEdit.NoWrap)
         self.highlighter = PythonHighlighter(self.textbox.document(),
                                              dark=SETTINGS_STORE.theme.value == 'dark')
 

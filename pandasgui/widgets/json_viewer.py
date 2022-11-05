@@ -1,6 +1,6 @@
 import sys
 from typing import Union, List
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 
 from pandasgui.store import PandasGuiStoreItem
 from pandasgui.utility import summarize_json, traverse_tree_widget
@@ -61,7 +61,7 @@ class JsonViewer(QtWidgets.QWidget, PandasGuiStoreItem):
         summary_view.setReadOnly(True)
         summary_view.setText(summarize_json(jdata))
 
-        font = QtGui.QFont("Monospace")
+        font = QtGui.QFont("Fira Mono")
         font.setStyleHint(QtGui.QFont.TypeWriter)
         summary_view.setFont(font)
 

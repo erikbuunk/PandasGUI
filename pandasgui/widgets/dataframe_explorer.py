@@ -1,7 +1,8 @@
 import sys
 from typing import List
-from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtCore import Qt
+from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QFrame
 from pandasgui.widgets.code_history_viewer import CodeHistoryViewer
 
 from pandasgui.widgets.containers import Container
@@ -32,7 +33,7 @@ class DataFrameExplorer(QtWidgets.QWidget):
         self.main_window = QtWidgets.QMainWindow()
         self.docks: List[DockWidget] = []
         self.main_window.setDockOptions(
-            self.main_window.GroupedDragging | self.main_window.AllowTabbedDocks | self.main_window.AllowNestedDocks)
+            QMainWindow.GroupedDragging | QMainWindow.AllowTabbedDocks | QMainWindow.AllowNestedDocks)
         self.main_window.setTabPosition(Qt.AllDockWidgetAreas, QtWidgets.QTabWidget.North)
 
         self.dataframe_viewer = DataFrameViewer(pgdf)
@@ -87,7 +88,7 @@ class DataFrameExplorer(QtWidgets.QWidget):
         dock.setAllowedAreas(Qt.AllDockWidgetAreas)
 
         frame = QtWidgets.QFrame()
-        frame.setFrameStyle(frame.Box | frame.Raised)
+        frame.setFrameStyle(QFrame.Box | QFrame.Raised)
         frame.setLineWidth(2)
         layout = QtWidgets.QHBoxLayout()
         layout.addWidget(widget)

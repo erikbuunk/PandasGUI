@@ -1,9 +1,9 @@
-from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtCore import pyqtSignal
+from PySide6 import QtGui, QtWidgets
+from PySide6.QtCore import Signal
 
 
 class QTreeWidget(QtWidgets.QTreeWidget):
-    onDropSignal = pyqtSignal()
+    onDropSignal = Signal()
 
     # Autosize columns
     def showEvent(self, event: QtGui.QShowEvent):

@@ -1,17 +1,16 @@
 
-from PyQt5 import QtCore, QtGui, QtWidgets, sip
-from PyQt5.QtCore import Qt
+from PySide6 import QtCore, QtGui, QtWidgets# sip
+from PySide6.QtCore import Qt
 
 from pandasgui.store import PandasGuiDataFrameStore, PandasGuiStore
-from pandasgui.widgets import base_widgets
 
 import tempfile
 import os
 
-from pandasgui.utility import traverse_tree_widget
 from pandasgui.widgets.column_viewer import FlatDraggableTree
 from pandasgui.widgets.json_viewer import JsonViewer
 
+# from PySide6.QtCore import QVariant
 # Use win32api on Windows because the pynput and mouse packages cause lag with PyQt drag-n-drop
 # https://github.com/moses-palmer/pynput/issues/390
 if os.name == 'nt':
@@ -51,7 +50,7 @@ class DelayedMimeData(QtCore.QMimeData):
     def add_callback(self, callback):
         self.callbacks.append(callback)
 
-    def retrieveData(self, mime_type: str, preferred_type: QtCore.QVariant.Type):
+    def retrieveData(self, mime_type: str, preferred_type: QtCore.QMetaType):
         if not mouse_pressed():
             for callback in self.callbacks.copy():
                 self.callbacks.remove(callback)
@@ -91,9 +90,11 @@ class Navigator(FlatDraggableTree):
         super().mouseReleaseEvent(event)
 
     def remove_item(self, name):
-        for item in traverse_tree_widget(self):
-            if item.text(0) == name:
-                sip.delete(item)
+        print("remove item with SIP module")
+
+        # for item in traverse_tree_widget(self):
+        #     if item.text(0) == name:
+        #         sip.delete(item)
 
     def selectionChanged(self, selected: QtCore.QItemSelection, deselected: QtCore.QItemSelection) -> None:
         """

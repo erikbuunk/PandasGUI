@@ -1,5 +1,5 @@
 import re
-from PyQt5 import QtWidgets
+from PySide6 import QtWidgets
 
 
 class SearchableListWidget(QtWidgets.QWidget):
@@ -42,7 +42,7 @@ class SearchableListWidget(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     import sys
-    from PyQt5.QtWidgets import QApplication
+    from PySide6.QtWidgets import QApplication
 
     app = QApplication(sys.argv)
 

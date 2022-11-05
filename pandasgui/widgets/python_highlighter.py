@@ -1,9 +1,11 @@
-# https://github.com/art1415926535/PyQt5-syntax-highlighting
+# https://github.com/art1415926535/PySide6-syntax-highlighting
 
-from PyQt5 import QtWidgets
+from PySide6 import QtWidgets
 
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
+# from PySide6.QtCore import QRegExp
+from PySide6.QtCore import QRegularExpression
+
+from PySide6.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
 
 def format(color, style=''):
     """
@@ -92,15 +94,16 @@ class PythonHighlighter(QSyntaxHighlighter):
 
         self.STYLES = DARK_STYLES if dark else LIGHT_STYLES
         document.parent().parent().setStyleSheet(f"""QPlainTextEdit{{
-            font-family:'Consolas'; 
-            color: {'#ccc' if dark else '#000'}; 
+            font-family:'Fira Mono';
+            color: {'#ccc' if dark else '#000'};
             background-color: transparent;}}""")
 
         # Multi-line strings (expression, flag, style)
         # FIXME: The triple-quotes in these two lines will mess up the
         # syntax highlighting from this point onward
-        self.tri_single = (QRegExp("'''"), 1, self.STYLES['string2'])
-        self.tri_double = (QRegExp('"""'), 2, self.STYLES['string2'])
+        print("REGEX May not work")
+        self.tri_single = (QRegularExpression("'''"), 1, self.STYLES['string2'])
+        self.tri_double = (QRegularExpression('"""'), 2, self.STYLES['string2'])
 
         rules = []
 
@@ -137,22 +140,25 @@ class PythonHighlighter(QSyntaxHighlighter):
         ]
 
         # Build a QRegExp for each pattern
-        self.rules = [(QRegExp(pat), index, fmt)
+        print("REGEX May not work")
+        self.rules = [(QRegularExpression(pat), index, fmt)
                       for (pat, index, fmt) in rules]
 
     def highlightBlock(self, text):
         """Apply syntax highlighting to the given block of text.
         """
         # Do other syntax formatting
-        for expression, nth, format in self.rules:
-            index = expression.indexIn(text, 0)
+        print("IndexIn works differently")
+        # https://doc.qt.io/qtforpython/overviews/qtcore-changes-qt6.html?highlight=indexin#global-matching
+        # for expression, nth, format in self.rules:
+        #     index = expression.indexIn(text, 0)
 
-            while index >= 0:
-                # We actually want the index of the nth match
-                index = expression.pos(nth)
-                length = len(expression.cap(nth))
-                self.setFormat(index, length, format)
-                index = expression.indexIn(text, index + length)
+        #     while index >= 0:
+        #         # We actually want the index of the nth match
+        #         index = expression.pos(nth)
+        #         length = len(expression.cap(nth))
+        #         self.setFormat(index, length, format)
+        #         index = expression.indexIn(text, index + length)
 
         self.setCurrentBlockState(0)
 
@@ -168,38 +174,39 @@ class PythonHighlighter(QSyntaxHighlighter):
         state changes when inside those strings. Returns True if we're still
         inside a multi-line string when this function is finished.
         """
-        # If inside triple-single quotes, start at 0
-        if self.previousBlockState() == in_state:
-            start = 0
-            add = 0
-        # Otherwise, look for the delimiter on this line
-        else:
-            start = delimiter.indexIn(text)
-            # Move past this match
-            add = delimiter.matchedLength()
+        print("match_multiline not working")
+        # # If inside triple-single quotes, start at 0
+        # if self.previousBlockState() == in_state:
+        #     start = 0
+        #     add = 0
+        # # Otherwise, look for the delimiter on this line
+        # else:
+        #     start = delimiter.indexIn(text)
+        #     # Move past this match
+        #     add = delimiter.matchedLength()
 
-        # As long as there's a delimiter match on this line...
-        while start >= 0:
-            # Look for the ending delimiter
-            end = delimiter.indexIn(text, start + add)
-            # Ending delimiter on this line?
-            if end >= add:
-                length = end - start + add + delimiter.matchedLength()
-                self.setCurrentBlockState(0)
-            # No; multi-line string
-            else:
-                self.setCurrentBlockState(in_state)
-                length = len(text) - start + add
-            # Apply formatting
-            self.setFormat(start, length, style)
-            # Look for the next match
-            start = delimiter.indexIn(text, start + length)
+        # # As long as there's a delimiter match on this line...
+        # while start >= 0:
+        #     # Look for the ending delimiter
+        #     end = delimiter.indexIn(text, start + add)
+        #     # Ending delimiter on this line?
+        #     if end >= add:
+        #         length = end - start + add + delimiter.matchedLength()
+        #         self.setCurrentBlockState(0)
+        #     # No; multi-line string
+        #     else:
+        #         self.setCurrentBlockState(in_state)
+        #         length = len(text) - start + add
+        #     # Apply formatting
+        #     self.setFormat(start, length, style)
+        #     # Look for the next match
+        #     start = delimiter.indexIn(text, start + length)
 
-        # Return True if still inside a multi-line string, False otherwise
-        if self.currentBlockState() == in_state:
-            return True
-        else:
-            return False
+        # # Return True if still inside a multi-line string, False otherwise
+        # if self.currentBlockState() == in_state:
+        #     return True
+        # else:
+        #     return False
 
 if __name__=='__main__':
     import pathlib

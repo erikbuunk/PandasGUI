@@ -1,12 +1,12 @@
 import sys
 
-from PyQt5.QtWidgets import QStyleOptionViewItem
+from PySide6.QtWidgets import QStyleOptionViewItem
 
 import pandasgui
 import os
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtCore import Qt
 
 from pandasgui.store import PandasGuiDataFrameStore
 from pandasgui.widgets.collapsible_panel import CollapsiblePanel

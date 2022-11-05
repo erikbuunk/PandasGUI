@@ -1,10 +1,10 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
-
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QDockWidget
 
 class DockWidget(QtWidgets.QDockWidget):
     # This signal is used to track which dock is considered active or focussed
-    activated = QtCore.pyqtSignal()
+    activated = QtCore.Signal()
 
     def __init__(self, title: str, pgdf_name: str = 'Untitled'):
         super().__init__(title)
@@ -13,9 +13,9 @@ class DockWidget(QtWidgets.QDockWidget):
 
         self.setTitleBarWidget(QtWidgets.QWidget())
         self.dockLocationChanged.connect(self.on_dockLocationChanged)
-        self.setFeatures(self.DockWidgetFloatable |
-                         self.DockWidgetMovable |
-                         self.DockWidgetClosable)
+        self.setFeatures( QDockWidget.DockWidgetFloatable |
+                          QDockWidget.DockWidgetMovable |
+                          QDockWidget.DockWidgetClosable)
 
         self.visibilityChanged.connect(lambda visible: visible and self.activated.emit())
 

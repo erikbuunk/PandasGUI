@@ -1,24 +1,25 @@
 import sys
 
-from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtGui import QMouseEvent
+from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QMouseEvent
 
 from pandasgui.store import PandasGuiDataFrameStore
 from pandasgui.utility import nunique
 from pandasgui.widgets import base_widgets
+from PySide6.QtWidgets import QAbstractItemView
 
 
 class FlatDraggableTree(base_widgets.QTreeWidget):
-    mouseReleaseEventSignal = pyqtSignal(QMouseEvent)
+    mouseReleaseEventSignal = Signal(QMouseEvent)
 
     def __init__(self):
         super().__init__()
 
         self.header().setStretchLastSection(False)
-        self.setDragDropMode(self.InternalMove)
-        self.setSelectionMode(self.ExtendedSelection)
-        self.setSelectionBehavior(self.SelectRows)
+        self.setDragDropMode(QAbstractItemView.InternalMove)
+        self.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.setRootIsDecorated(False)
 
         self.expandAll()
@@ -117,7 +118,7 @@ class ColumnViewer(QtWidgets.QWidget):
             child.setHidden(True)
 
         items = self.tree.findItems(f".*{self.search_bar.text()}.*",
-                                    Qt.MatchRegExp | Qt.MatchRecursive)
+                                    Qt.MatchFlag.MatchRegularExpression | Qt.MatchFlag.MatchRecursive)
         for item in items:
             item.setHidden(False)
 

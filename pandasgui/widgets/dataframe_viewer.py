@@ -5,12 +5,12 @@ from typing import Union
 
 import numpy as np
 import pandas as pd
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtCore import Qt
 from typing_extensions import Literal
 from pandasgui.store import PandasGuiDataFrameStore
 import pandasgui
-
+from PySide6.QtWidgets import QAbstractItemView
 import logging
 
 from pandasgui.widgets.column_menu import ColumnMenu
@@ -1040,7 +1040,7 @@ class HeaderNamesView(QtWidgets.QTableView):
         self.horizontalHeader().hide()
         self.verticalHeader().hide()
 
-        self.setSelectionMode(self.NoSelection)
+        self.setSelectionMode(QAbstractItemView.NoSelection)
 
         # Automatically stretch rows/columns as widget is resized
         if self.orientation == Qt.Horizontal:

@@ -1,7 +1,9 @@
 pandas
-PyQt5
-PyQt5-sip
-PyQtWebEngine
+PySide6
+# PySide6WebEngine
+# PyQt5
+# PyQt5-sip
+# PyQtWebEngine
 plotly
 wordcloud
 setuptools
@@ -11,5 +13,5 @@ IPython
 pyarrow
 astor
 typing-extensions
-qtstylish>=0.1.2
-pywin32; platform_system=="Windows"
+# qtstylish>=0.1.2
+# pywin32; platform_system=="Windows"
