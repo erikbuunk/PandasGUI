@@ -64,3 +64,19 @@ show(**all_datasets)
 This project is still in version 0.x.y and subject to breaking changes. The latest changes will be on the `develop` branch, and will be occasionally merged to `master` as a release with a tag indicating the version number and published to PyPi.
 
 If you like this project remember to leave a ⭐! And if you want to give more support you can <a href="https://www.buymeacoffee.com/adrotog" target="_blank">Buy Me A Coffee</a>.
+
+# PySide6
+
+Updated with main things for PySide6 (the PyQt5 was not working on M1 Mac)
+
+- PyQt5 -> PySide 6
+- Changed many enumerations
+- sip module -> resplaced by shiboken
+- fonts
+
+Main things that are not working:
+
+- Frequent crashes
+- Regular Expressions have changed
+- Window position / screensize.
+- Some other things

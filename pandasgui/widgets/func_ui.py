@@ -5,7 +5,8 @@ from collections import OrderedDict
 
 
 from PySide6.QtWidgets import QAbstractItemView
-from PySide6 import QtCore, QtGui, QtWidgets #, sip
+from PySide6 import QtCore, QtGui, QtWidgets
+import shiboken6 as sip
 from PySide6.QtCore import Qt
 from typing import List, Callable
 import os
@@ -249,14 +250,13 @@ class FuncUi(QtWidgets.QWidget):
         self.setLayout(self.main_layout)
 
     def handle_double_click(self, item, column):
-        print("ERROR sip not available")
-        # # Delete chldren if is section
-        # if item.parent() is None:
-        #     for i in reversed(range(item.childCount())):
-        #         # sip.delete(item.child(i))
-        # # Delete if not section
-        # else:
-        #     sip.delete(item)
+        # Delete chldren if is section
+        if item.parent() is None:
+            for i in reversed(range(item.childCount())):
+                sip.delete(item.child(i))
+        # Delete if not section
+        else:
+            sip.delete(item)
 
     def custom_kwargs(self):
         self.kwargs_dialog.setVisible(not self.kwargs_dialog.isVisible())
@@ -369,9 +369,9 @@ class FuncUi(QtWidgets.QWidget):
 
         # Delete all sections
         root = self.dest_tree.invisibleRootItem()
-        print("Error sip not available")
-        # for i in reversed(range(root.childCount())):
-        #     sip.delete(root.child(i))
+
+        for i in reversed(range(root.childCount())):
+            sip.delete(root.child(i))
 
         for arg in schema.args:
 

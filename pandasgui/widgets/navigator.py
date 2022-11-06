@@ -1,6 +1,7 @@
 
-from PySide6 import QtCore, QtGui, QtWidgets# sip
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
+import shiboken6 as sip
 
 from pandasgui.store import PandasGuiDataFrameStore, PandasGuiStore
 
@@ -90,11 +91,9 @@ class Navigator(FlatDraggableTree):
         super().mouseReleaseEvent(event)
 
     def remove_item(self, name):
-        print("remove item with SIP module")
-
-        # for item in traverse_tree_widget(self):
-        #     if item.text(0) == name:
-        #         sip.delete(item)
+        for item in traverse_tree_widget(self):
+            if item.text(0) == name:
+                sip.delete(item)
 
     def selectionChanged(self, selected: QtCore.QItemSelection, deselected: QtCore.QItemSelection) -> None:
         """

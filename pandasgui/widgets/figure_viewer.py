@@ -1,13 +1,14 @@
 import os
 import sys
 import tempfile
-
-from PySide6 import QtCore, QtGui, QtWidgets #, sip
+from PySide6 import QtCore, QtGui, QtWidgets
+import shiboken6 as sip
 import PySide6
 import logging
 from PySide6.QtWebEngineCore import QWebEngineSettings
 from pandasgui.store import PandasGuiStoreItem
 from pandasgui.utility import get_figure_type
+
 
 logger = logging.getLogger(__name__)
 
@@ -28,8 +29,7 @@ if "PySide6.QtWebEngineWidgets" not in sys.modules:
                        "This may cause problems. "
                        "To avoid this, import pandasgui or PySide6.QtWebEngineWidgets before a QApplication is created.")
         app.quit()
-        print("ERROR: sip delete")
-        # sip.delete(app)
+        sip.delete(app)
         from PySide6 import QtWebEngineWidgets
 
         app.__init__(sys.argv + ["--ignore-gpu-blacklist", "--enable-gpu-rasterization"])
