@@ -1,8 +1,6 @@
 pandas
 PySide6
 # PySide6WebEngine
-# PyQt5
-# PyQt5-sip
 # PyQtWebEngine
 plotly
 wordcloud
@@ -13,5 +11,6 @@ IPython
 pyarrow
 astor
 typing-extensions
+statsmodels
 # qtstylish>=0.1.2
-# pywin32; platform_system=="Windows"
+pywin32; platform_system=="Windows"
