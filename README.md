@@ -74,9 +74,16 @@ Updated with main things for PySide6 (the PyQt5 was not working on M1 Mac)
 - sip module -> resplaced by shiboken
 - fonts
 
-Main things that are not working:
+Main things that are not working/needs fixing:
 
-- Frequent crashes
+- check PyQtWebEngine
+- update monocpace fonts to more generic font such as Courier New
 - Regular Expressions have changed
 - Window position / screensize.
-- Some other things
+- qt styling (changes automatically with system)
+- Some other things and errors that appear in the console
+
+# Planned improvements
+
+- [ ] Work with other datatypes: feather, stata to make it a generic file viewer
+- [ ] make it an app
